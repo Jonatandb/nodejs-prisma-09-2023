@@ -23,7 +23,7 @@ async function usersQuery() {
   users.map(u => console.log(`${u.id} - ${u.name}`))
 }
 
-//usersQuery()
+// usersQuery()
 
 
 async function userQuery() {
@@ -33,14 +33,32 @@ async function userQuery() {
     //   name: "Jonatandb"
     // }
     where: {
-      OR: [
-        { id: 2 },
-        { name: 'Jonatandb' }
-      ]
+      OR: [{ id: 2 }, { name: 'Jonatandb' }],
     },
   })
 
   console.log(user)
 }
 
-userQuery()
+//userQuery()
+
+
+async function userDeletion() {
+  try {
+    const user = await prisma.user.delete({
+      where: {
+        id: 2, //  name: 'Jonatandb 2'
+      },
+    })
+
+    console.log(user)
+  } catch(err) {
+    if(err.code == "P2025") {
+      console.log("User not found");
+    } else {
+      console.log(err.code, err.meta.cause);
+    }
+  }
+}
+
+userDeletion()
