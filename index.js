@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-async function main() {
+async function userCreation() {
   const newUser = await prisma.user.create({
     data: {
       name: 'Jonatandb 3',
@@ -13,4 +13,14 @@ async function main() {
   console.log(newUser)
 }
 
-main()
+// userCreation()
+
+
+async function usersQuery() {
+  const users = await prisma.user.findMany()
+
+  //console.log(users)
+  users.map(u => console.log(`${u.id} - ${u.name}`))
+}
+
+usersQuery()
