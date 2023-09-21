@@ -23,4 +23,24 @@ async function usersQuery() {
   users.map(u => console.log(`${u.id} - ${u.name}`))
 }
 
-usersQuery()
+//usersQuery()
+
+
+async function userQuery() {
+  const user = await prisma.user.findFirst({
+    // where: {
+    //   //id: 3
+    //   name: "Jonatandb"
+    // }
+    where: {
+      OR: [
+        { id: 2 },
+        { name: 'Jonatandb' }
+      ]
+    },
+  })
+
+  console.log(user)
+}
+
+userQuery()
