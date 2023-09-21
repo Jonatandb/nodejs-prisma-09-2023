@@ -5,15 +5,15 @@ const prisma = new PrismaClient()
 async function userCreation() {
   const newUser = await prisma.user.create({
     data: {
-      name: 'Jonatandb 3',
-      email: 'jonatandb3@gmail.com'
+      name: 'Jonatandb 6',
+      email: 'jonatandb6@gmail.com'
     }
   })
 
   console.log(newUser)
 }
 
-// userCreation()
+//userCreation()
 
 
 async function usersQuery() {
@@ -61,4 +61,42 @@ async function userDeletion() {
   }
 }
 
-userDeletion()
+//userDeletion()
+
+
+async function userUpdate() {
+  const updatedUser = await prisma.user.update({
+    where: {
+      //id: 3,
+      email: "jonatandb@gmail.com"
+    },
+    data: {
+      name: 'Jonatan',
+      lastname: 'db'
+    }
+  })
+
+  console.log(updatedUser)
+}
+
+//userUpdate()
+
+
+async function multipleUsersUpdate() {
+  const affectedRows = await prisma.user.updateMany({
+    where: {
+      OR: [{ id: 4 }, { id: 5 }, { id: 6 }],
+    },
+    data: {
+      name: 'Jonatan',
+      lastname: 'db',
+    },
+  })
+
+  console.log({affectedRows})
+
+  const users = await prisma.user.findMany()
+  console.log(users);
+}
+
+multipleUsersUpdate()
