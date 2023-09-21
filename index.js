@@ -99,4 +99,28 @@ async function multipleUsersUpdate() {
   console.log(users);
 }
 
-multipleUsersUpdate()
+// multipleUsersUpdate()
+
+
+async function upsertUser() {
+  const result = await prisma.user.upsert({
+    where: {
+      email: 'test@example.com',
+    },
+    create: {
+      email: 'test@example.com',
+      name: 'Jonatan',
+    },
+    update: {
+      name: 'Jonatan updated',
+    },
+  })
+
+  console.log(result);
+
+  const users = await prisma.user.findMany()
+  console.log(users);
+
+}
+
+upsertUser()
