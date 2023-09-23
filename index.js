@@ -123,4 +123,57 @@ async function upsertUser() {
 
 }
 
-upsertUser()
+// upsertUser()
+
+
+async function relatedDataCreationExample1() {
+  const newUser = await prisma.user.create({
+    data: {
+      name: 'John 5',
+      email: 'test5@example.com'
+    }
+  })
+
+  console.log(newUser);
+
+  const newPost = await prisma.post.create({
+    data: {
+      title: 'First post',
+      content: 'First post content',
+      authorId: newUser.id,
+      //Otra forma de hacer la relación (en lugar de usar authorId):
+      // author: {
+      //   connect: {
+      //     id: newUser.id,
+      //   },
+      // },
+    },
+  })
+
+  console.log({ newPost })
+}
+
+//relatedDataCreationExample1()
+
+
+async function relatedDataCreationExample2() {
+  const newUser = await prisma.user.create({
+    data: {
+      name: 'John 6',
+      email: 'test6@example.com',
+      posts: {
+        create: {
+          title: 'Prácticas con Primas',
+          content: 'Se comienza por...'
+        }
+      }
+    }
+  })
+
+  console.log(newUser)
+
+  const posts = await prisma.post.findMany()
+  console.log(posts)
+}
+
+relatedDataCreationExample2()
