@@ -176,4 +176,34 @@ async function relatedDataCreationExample2() {
   console.log(posts)
 }
 
-relatedDataCreationExample2()
+// relatedDataCreationExample2()
+
+
+async function listingRelatedData() {
+
+  // Adding another post to user 13
+  // await prisma.post.create({
+  //   data: {
+  //     title: 'Related data',
+  //     authorId: 13
+  //   }
+  // })
+
+  const users = await prisma.user.findMany({
+    include: {
+      posts: true
+    }
+  })
+
+  users.forEach(user => {
+    console.log('----------');
+    console.log(`User: ${user.name}`);
+    console.log(`Email: ${user.email}`);
+    user.posts.forEach((post, idx) => {
+      console.log(`${idx+1} - ${post.title} ${post.content}`);
+    })
+  });
+}
+
+
+listingRelatedData()
